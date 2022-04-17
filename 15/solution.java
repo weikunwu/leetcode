@@ -23,7 +23,7 @@
 // 0 <= nums.length <= 3000
 // -105 <= nums[i] <= 105
 
-class Solution {
+class Solution1 {
     public List<List<Integer>> threeSum(int[] nums) {
         HashMap<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
@@ -66,5 +66,40 @@ class Solution {
             }
         }
         return l;
+    }
+}
+
+class Solution2 {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length - 2; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            int left = i + 1;
+            int right = nums.length - 1;
+            int target = -nums[i];
+            int lastLeft = nums[left] - 1;
+            while (left != right) {
+                if (nums[left] == lastLeft) {
+                    left++;
+                    continue;
+                }
+                if (nums[left] + nums[right] > target) {
+                    right--;
+                } else if (nums[left] + nums[right] < target) {
+                    left++;
+                } else {
+                    List<Integer> l = new ArrayList<>();
+                    l.add(nums[i]);
+                    l.add(nums[left]);
+                    l.add(nums[right]);
+                    lastLeft = nums[left];
+                    result.add(l);
+                }
+            }
+        }
+        return result;
     }
 }
